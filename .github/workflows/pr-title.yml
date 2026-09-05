@@ -1,0 +1,33 @@
+name: PR title
+
+on:
+  pull_request:
+    types: [opened, edited, reopened, synchronize]
+
+permissions: {}
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  title:
+    name: Conventional PR title
+    runs-on: ubuntu-24.04
+    timeout-minutes: 2
+    steps:
+      - name: Validate title
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+        with:
+          script: |
+            const title = context.payload.pull_request.title;
+            const pattern = /^(feat|fix|perf|refactor|docs|style|test|build|ci|chore|revert)(\([^()\r\n]+\))?!?: \S[^\r\n]*$/u;
+
+            if (!pattern.test(title)) {
+              core.setFailed(
+                "Use a Conventional Commit title, such as 'feat: open a repository' " +
+                "or 'fix(diff): preserve scroll position'. " +
+                "Allowed types: feat, fix, perf, refactor, docs, style, test, build, ci, chore, revert. " +
+                "Scopes are optional; add ! before the colon for a breaking change."
+              );
+            }
