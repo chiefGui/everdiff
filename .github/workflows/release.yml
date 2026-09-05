@@ -1,0 +1,61 @@
+name: Release
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions: {}
+
+concurrency:
+  group: release-main
+  cancel-in-progress: false
+
+jobs:
+  release:
+    name: Prepare or publish release
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
+    steps:
+      # Approve bot-created PR checks in GitHub after the lockfile step completes.
+      - name: Prepare release PR or publish merged release
+        id: release
+        uses: googleapis/release-please-action@45996ed1f6d02564a971a2fa1b5860e934307cf7 # v5.0.0
+        with:
+          target-branch: main
+
+      # Release Please updates package versions but has no Bun lockfile updater.
+      - name: Check out release branch
+        if: steps.release.outputs.pr != ''
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ fromJSON(steps.release.outputs.pr).headBranchName }}
+
+      - name: Set up Bun
+        if: steps.release.outputs.pr != ''
+        uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2.2.0
+        with:
+          bun-version-file: package.json
+
+      - name: Update release lockfile
+        if: steps.release.outputs.pr != ''
+        env:
+          RELEASE_BRANCH: ${{ fromJSON(steps.release.outputs.pr).headBranchName }}
+        run: |
+          bun install --lockfile-only --ignore-scripts
+          git add bun.lock
+          if git diff --cached --quiet; then
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git -c core.hooksPath=/dev/null commit \
+            -m "chore: refresh release lockfile" \
+            -m "Release version changes leave Bun's workspace metadata stale." \
+            -m "Regenerate the lockfile from the release manifests."
+          git push origin "HEAD:$RELEASE_BRANCH"
