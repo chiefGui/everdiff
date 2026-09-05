@@ -3,6 +3,7 @@ dist/
 out/
 .vite/
 .vite-plus/
+.vite-hooks/_/
 .tanstack/
 *.tsbuildinfo
 .DS_Store
