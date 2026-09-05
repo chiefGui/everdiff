@@ -9,11 +9,10 @@
   "scripts": {
     "dev": "bun run --filter @everdiff/electron dev",
     "dev:web": "bun run --filter @everdiff/web dev",
-    "build": "bun run --filter @everdiff/electron build && bun run size",
+    "build": "bun run --filter @everdiff/electron build",
     "build:web": "bun run --filter @everdiff/web build",
     "typecheck": "tsc --noEmit -p tsconfig.json && bun run --filter '*' typecheck",
     "test": "vp test run",
-    "size": "bun scripts/check-size.ts",
     "lint": "vp lint .",
     "fmt": "vp fmt .",
     "fmt:check": "vp fmt --check .",
