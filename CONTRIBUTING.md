@@ -1,14 +1,19 @@
 # Contributing
 
-Use Bun from `package.json` and Node.js from `.node-version`. Follow [AGENTS.md](AGENTS.md).
+Install the Node.js version in `.node-version` and the Bun version listed in
+`package.json` under `packageManager`.
 
-- `bun install --frozen-lockfile`: install dependencies and Git hooks.
-- `bun run staged`: format and lint staged files; preserve unstaged changes.
-- `bun run check`: CI's formatting, lint, build, type checks, and unit tests.
+```sh
+bun install --frozen-lockfile
+bun run dev
+```
 
-Inspect hooks with `bun run vp hooks status`. Use `bun run vp hooks disable` or
-`bun run vp hooks enable` to change their state. Disabling survives reinstalls.
+For browser-only development, use `bun run dev:web`.
 
-Use Conventional Commit PR titles, such as `feat: open a repository`, and squash
-with the PR title as the commit subject. Title edits run validation independently
-of the build.
+The UI lives in `apps/everdiff-web`; desktop integration lives in `apps/everdiff-electron`.
+
+Run `bun run check` before opening a PR. Commits automatically format and lint
+staged files.
+
+Keep PRs focused and explain what changed. Use a short Conventional Commit title,
+such as `fix: preserve scroll position`.
