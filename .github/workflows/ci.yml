@@ -40,6 +40,12 @@ jobs:
       - name: Install dependencies
         run: bun install --frozen-lockfile
 
+      # Frozen installs do not validate workspace versions in the lockfile.
+      - name: Verify lockfile metadata
+        run: |
+          bun install --lockfile-only --ignore-scripts
+          git diff --exit-code -- bun.lock
+
       # The build refreshes generated router types before type checking.
       - name: Check formatting, lint, build, types, and tests
         run: bun run check

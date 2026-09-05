@@ -44,5 +44,5 @@ export default defineConfig({
       },
     ],
   },
-  fmt: { ignorePatterns: [...generated, "bun.lock"], semi: true, printWidth: 100 },
+  fmt: { ignorePatterns: [...generated, "bun.lock", "CHANGELOG.md"], semi: true, printWidth: 100 },
 });
