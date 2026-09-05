@@ -1,0 +1,17 @@
+/* Component styles are extracted from StyleX at build time. */
+:root {
+  color-scheme: dark;
+  font-family: system-ui, sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  background: #111113;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}

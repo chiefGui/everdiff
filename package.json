@@ -1,0 +1,42 @@
+{
+  "name": "everdiff",
+  "version": "0.0.0",
+  "private": true,
+  "workspaces": [
+    "apps/*"
+  ],
+  "type": "module",
+  "scripts": {
+    "dev": "bun run --filter @everdiff/electron dev",
+    "dev:web": "bun run --filter @everdiff/web dev",
+    "build": "bun run --filter @everdiff/electron build && bun run size",
+    "build:web": "bun run --filter @everdiff/web build",
+    "typecheck": "tsc --noEmit -p tsconfig.json && bun run --filter '*' typecheck",
+    "test": "vp test run",
+    "size": "bun scripts/check-size.ts",
+    "lint": "vp lint .",
+    "fmt": "vp fmt .",
+    "fmt:check": "vp fmt --check .",
+    "check": "bun run typecheck && bun run lint && bun run fmt:check && bun run test",
+    "package": "bun run --filter @everdiff/electron package",
+    "make": "bun run --filter @everdiff/electron make"
+  },
+  "devDependencies": {
+    "@types/node": "26.4.1",
+    "effect": "4.0.0-rc.112",
+    "typescript": "7.0.2",
+    "vite-plus": "0.3.0"
+  },
+  "overrides": {
+    "vite": "npm:@voidzero-dev/vite-plus-core@0.3.0",
+    "vitest": "4.1.11"
+  },
+  "engines": {
+    "bun": ">=1.4.2",
+    "node": ">=24.11.0"
+  },
+  "packageManager": "bun@1.4.2",
+  "trustedDependencies": [
+    "electron"
+  ]
+}

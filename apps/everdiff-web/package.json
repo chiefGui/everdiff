@@ -1,0 +1,30 @@
+{
+  "name": "@everdiff/web",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vp dev",
+    "build": "vp build",
+    "preview": "vp preview",
+    "typecheck": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p tsconfig.node.json"
+  },
+  "dependencies": {
+    "@ariakit/react": "0.4.39",
+    "@stylexjs/stylex": "0.19.0",
+    "@tanstack/react-router": "1.170.32",
+    "effect": "4.0.0-rc.112",
+    "motion": "13.2.0",
+    "react": "19.2.8",
+    "react-dom": "19.2.8"
+  },
+  "devDependencies": {
+    "@stylexjs/unplugin": "0.19.0",
+    "@tanstack/router-plugin": "1.168.35",
+    "@types/react": "19.2.18",
+    "@types/react-dom": "19.2.7",
+    "@vitejs/plugin-react": "6.1.1",
+    "unplugin": "2.3.11",
+    "vite-plus": "0.3.0"
+  }
+}

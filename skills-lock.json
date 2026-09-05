@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "skills": {
+    "polish": {
+      "source": "chiefGui/skills",
+      "sourceType": "github",
+      "skillPath": "skills/polish/SKILL.md",
+      "computedHash": "006a5e14357ca8be9450e91c3aeca80e9190887e99065eefa7bf3a5706c47108"
+    }
+  }
+}
